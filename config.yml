@@ -1,0 +1,4 @@
+profile:
+  active: dev
+server:
+  port: 8085
