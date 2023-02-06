@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"session.com/config"
-	"session.com/package/controller"
+	"session.com/pkg/controller"
 
 	"github.com/gorilla/mux"
 	"github.com/tkanos/gonfig"

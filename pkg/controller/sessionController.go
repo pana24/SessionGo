@@ -5,7 +5,8 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"session.com/package/model"
+	"session.com/config"
+	"session.com/pkg/model"
 )
 
 var SessionWrt int
@@ -25,7 +26,8 @@ func CreateSession(w http.ResponseWriter, r *http.Request) {
 }
 
 func FindSessions(w http.ResponseWriter, r *http.Request) {
-	res, err := http.Get("http://localhost:8080/v1/policies")
+	configuration := config.Configuration{}
+	res, err := http.Get(configuration.Opa.Url)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

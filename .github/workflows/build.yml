@@ -1,7 +1,7 @@
 # This workflow will build a golang project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
 
-name: Go
+name: Continuous Integration
 
 on:
   push:
@@ -20,9 +20,20 @@ jobs:
       uses: actions/setup-go@v3
       with:
         go-version: 1.19
+    - name: Run linting
+      run: |
+          go fmt ./...
+          go vet ./...
 
     - name: Build
       run: go build -v ./...
 
-    - name: Test
-      run: go test -v ./...
+    - name: Run tests
+      run: go test -covermode=count -coverprofile=coverage.out ./... 
+    - name: Check code coverage > 50%
+      run: |
+          total=`go tool cover -func=coverage.out | grep total | grep -Eo '[0-9]+\.[0-9]+'`
+          if (( $(echo "$total <= 50" | bc -l) )) ; then
+            echo "code coverage $total% < 50%"
+            exit 1
+          fi

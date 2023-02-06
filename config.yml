@@ -2,3 +2,6 @@ profile:
   active: dev
 server:
   port: 8085
+
+opa:
+  url: "http://localhost:8080/v1/policies"
